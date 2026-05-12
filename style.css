@@ -104,10 +104,25 @@ header {
     border-bottom: 1px solid rgba(192, 160, 128, 0.2);
 }
 
-.nav-content {
+.nav-content nav {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 25px;
+}
+
+.nav-content nav a {
+    color: var(--text-white);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: var(--trans-smooth);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-content nav a:not(.btn-primary):hover {
+    color: var(--accent-orange);
+    text-shadow: 0 0 10px rgba(255, 138, 0, 0.5);
 }
 
 .hero {
