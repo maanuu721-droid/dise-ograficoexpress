@@ -3,198 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diseño Gráfico Express | Agencia Creativa y Automatización IA</title>
-    <meta name="description" content="Diseño Gráfico Express. Creamos identidades visuales, videos publicitarios, páginas web y agentes de IA automatizados. Resultados rápidos y de alta calidad.">
+    <title>Diseño Gráfico Express | Creatividad Épica a Toda Velocidad</title>
+    <meta name="description" content="Agencia de diseño gráfico de alto rendimiento. Especialistas en branding, web, video y multimedia con calidad épica y entrega express.">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="container nav-content">
-            <div class="logo-container">
-                <img src="../DGE.jpg" alt="DGE Logo" class="nav-logo" onerror="this.src='https://placehold.co/100x50/0B0F19/00E5FF?text=DGE'">
-                <span class="logo-text">Diseño Gráfico Express</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#portafolio">Portafolio</a></li>
-                <li><a href="#contacto" class="btn-primary">Cotizar Ahora</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <header class="hero">
-        <div class="glow-orb orb-1"></div>
-        <div class="glow-orb orb-2"></div>
-        <div class="container hero-content">
-            <div class="hero-text">
-                <h1 class="fade-in-up">Impacto Visual a la Velocidad de tu <span class="text-gradient">Imaginación</span></h1>
-                <p class="subtitle fade-in-up delay-1">Branding premium, diseño publicitario, desarrollo web y agentes de IA automatizados para escalar tus ventas.</p>
-                <div class="hero-buttons fade-in-up delay-2">
-                    <a href="#contacto" class="btn-primary large">Empezar Proyecto <i data-lucide="arrow-right"></i></a>
-                    <a href="#portafolio" class="btn-secondary large">Ver Trabajos</a>
-                </div>
-            </div>
-            <div class="hero-image-container fade-in-up delay-3">
-                <div class="glass-card image-wrapper">
-                    <img src="assets/hero_img.jpg" alt="Diseño Premium" class="hero-img" id="heroPlaceholder">
-                </div>
-            </div>
+    <header>
+        <div class="container nav-content">
+            <div class="brand-font" style="font-weight: 700; color: var(--accent-gold); font-family: 'Cinzel', serif;">DGE</div>
+            <nav>
+                <a href="#servicios" style="color: white; text-decoration: none; margin-left: 20px;">Servicios</a>
+                <a href="#contacto" class="btn-primary" style="margin-left: 20px; padding: 8px 20px; font-size: 0.8rem;">Cotizar</a>
+            </nav>
         </div>
     </header>
 
-    <!-- Services & Pricing -->
-    <section id="servicios" class="services section">
-        <div class="container">
-            <h2 class="section-title text-center">Soluciones <span class="text-gradient">Creativas</span></h2>
-            <p class="section-subtitle text-center">Paquetes diseñados para maximizar el ROI de tu marca.</p>
-            
-            <div class="pricing-grid">
-                <!-- Logotipo -->
-                <div class="pricing-card">
-                    <div class="card-icon"><i data-lucide="pen-tool"></i></div>
-                    <h3>Logotipo Profesional</h3>
-                    <div class="price">$300</div>
-                    <ul class="features">
-                        <li><i data-lucide="check"></i> 2 Propuestas Iniciales</li>
-                        <li><i data-lucide="check"></i> Formatos Vectoriales</li>
-                        <li><i data-lucide="check"></i> Guía de Color Básica</li>
-                        <li><i data-lucide="check"></i> Entrega en 48 hrs</li>
-                    </ul>
-                    <a href="#contacto" class="btn-outline w-100">Elegir Paquete</a>
-                </div>
-
-                <!-- Video -->
-                <div class="pricing-card popular">
-                    <div class="popular-badge">Más Pedido</div>
-                    <div class="card-icon"><i data-lucide="video"></i></div>
-                    <h3>Video Publicitario</h3>
-                    <div class="price">$500</div>
-                    <ul class="features">
-                        <li><i data-lucide="check"></i> Duración 1 Minuto</li>
-                        <li><i data-lucide="check"></i> Edición Dinámica</li>
-                        <li><i data-lucide="check"></i> Audio y SFX Premium</li>
-                        <li><i data-lucide="check"></i> Formatos para Reels/TikTok</li>
-                    </ul>
-                    <a href="#contacto" class="btn-primary w-100">Elegir Paquete</a>
-                </div>
-
-                <!-- Branding -->
-                <div class="pricing-card">
-                    <div class="card-icon"><i data-lucide="layers"></i></div>
-                    <h3>Branding Completo</h3>
-                    <div class="price">$800</div>
-                    <ul class="features">
-                        <li><i data-lucide="check"></i> Diseño de Logotipo</li>
-                        <li><i data-lucide="check"></i> Manual de Identidad</li>
-                        <li><i data-lucide="check"></i> Papelería Corporativa</li>
-                        <li><i data-lucide="check"></i> Assets para Redes Sociales</li>
-                    </ul>
-                    <a href="#contacto" class="btn-outline w-100">Elegir Paquete</a>
-                </div>
-
-                <!-- Web -->
-                <div class="pricing-card">
-                    <div class="card-icon"><i data-lucide="layout"></i></div>
-                    <h3>Landing Page</h3>
-                    <div class="price">$400</div>
-                    <ul class="features">
-                        <li><i data-lucide="check"></i> Diseño Responsivo</li>
-                        <li><i data-lucide="check"></i> Alta Velocidad (SEO)</li>
-                        <li><i data-lucide="check"></i> Integración WhatsApp</li>
-                        <li><i data-lucide="check"></i> Hosting + Dominio (1 año)</li>
-                    </ul>
-                    <a href="#contacto" class="btn-outline w-100">Elegir Paquete</a>
-                </div>
-
-                <!-- Agente IA -->
-                <div class="pricing-card premium">
-                    <div class="card-icon"><i data-lucide="bot"></i></div>
-                    <h3>Agente IA Automatizado</h3>
-                    <div class="price">$1000</div>
-                    <ul class="features">
-                        <li><i data-lucide="check"></i> Bot de WhatsApp Inteligente</li>
-                        <li><i data-lucide="check"></i> Respuestas 24/7</li>
-                        <li><i data-lucide="check"></i> Calificación de Leads</li>
-                        <li><i data-lucide="check"></i> Conexión a Base de Datos</li>
-                    </ul>
-                    <a href="#contacto" class="btn-primary w-100 glow-btn">Elegir Paquete</a>
-                </div>
-
-                <!-- Email Marketing -->
-                <div class="pricing-card">
-                    <div class="card-icon"><i data-lucide="mail"></i></div>
-                    <h3>Email Marketing</h3>
-                    <div class="price">$200</div>
-                    <ul class="features">
-                        <li><i data-lucide="check"></i> Diseño de Template</li>
-                        <li><i data-lucide="check"></i> Redacción Copywriter</li>
-                        <li><i data-lucide="check"></i> Configuración de Campaña</li>
-                        <li><i data-lucide="check"></i> Reporte de Apertura</li>
-                    </ul>
-                    <a href="#contacto" class="btn-outline w-100">Elegir Paquete</a>
+    <main>
+        <section class="hero">
+            <div class="hero-bg-effect"></div>
+            <div class="container">
+                <img src="assets/DGE.jpg" alt="Diseño Gráfico Express Logo" class="hero-logo" id="main-logo">
+                <h1>DISEÑO GRÁFICO EXPRESS</h1>
+                <p>Creatividad Épica a Toda Velocidad</p>
+                <div class="hero-btns">
+                    <a href="#servicios" class="btn-primary">Explorar Servicios</a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Portfolio -->
-    <section id="portafolio" class="portfolio section dark-bg">
-        <div class="container">
-            <h2 class="section-title">Nuestro <span class="text-gradient">Portafolio</span></h2>
-            <div class="masonry-grid">
-                <div class="masonry-item img-hover-zoom">
-                    <img src="assets/portafolio_1.jpg" alt="Branding corporativo">
+        <section id="servicios" class="services">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Nuestra Maestría</h2>
+                    <div class="underline"></div>
                 </div>
-                <div class="masonry-item img-hover-zoom">
-                    <img src="assets/portafolio_2.jpg" alt="Diseño Web">
-                </div>
-                <div class="masonry-item img-hover-zoom">
-                    <img src="assets/portafolio_3.jpg" alt="Post Redes Sociales">
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Footer & Contact -->
-    <footer id="contacto" class="footer">
-        <div class="container footer-content">
-            <div class="footer-info">
-                <div class="logo-container">
-                    <span class="logo-text text-gradient">DGE</span>
-                </div>
-                <p>Tu agencia de diseño rápido, estético y automatizado. Llevamos tu marca al siguiente nivel.</p>
-                <div class="social-links">
-                    <a href="#"><i data-lucide="instagram"></i></a>
-                    <a href="#"><i data-lucide="facebook"></i></a>
-                    <a href="#"><i data-lucide="linkedin"></i></a>
+                <div class="services-grid">
+                    <div class="glass-card">
+                        <div class="service-icon"><i data-lucide="layout"></i></div>
+                        <h3>Diseño Web</h3>
+                        <p>Interfaces dinámicas y optimizadas que capturan la esencia de tu marca.</p>
+                    </div>
+                    <div class="glass-card">
+                        <div class="service-icon"><i data-lucide="video"></i></div>
+                        <h3>Edición de Video</h3>
+                        <p>Producción audiovisual de alto impacto con efectos visuales de última generación.</p>
+                    </div>
+                    <div class="glass-card">
+                        <div class="service-icon"><i data-lucide="layers"></i></div>
+                        <h3>Branding Épico</h3>
+                        <p>Identidades visuales que trascienden el tiempo y destacan en el mercado.</p>
+                    </div>
+                    <div class="glass-card">
+                        <div class="service-icon"><i data-lucide="smartphone"></i></div>
+                        <h3>Apps Móviles</h3>
+                        <p>Experiencias de usuario fluidas diseñadas para el mundo moderno.</p>
+                    </div>
                 </div>
             </div>
-            <div class="footer-contact">
-                <h3>Contacto Rápido</h3>
-                <p><i data-lucide="mail"></i> hola@diseñograficoexpress.com</p>
-                <p><i data-lucide="phone"></i> Agente de IA disponible 24/7 vía WhatsApp</p>
+        </section>
+
+        <section class="services" style="background: rgba(192, 160, 128, 0.05);">
+            <div class="container" style="text-align: center;">
+                <h2 style="font-family: 'Cinzel', serif; margin-bottom: 30px;">¿Listo para elevar tu marca?</h2>
+                <p style="margin-bottom: 40px; color: var(--text-dim);">Combinamos la precisión de un relojero con la energía de la innovación digital.</p>
+                <a href="#" class="btn-primary">Iniciar Proyecto Ahora</a>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Diseño Gráfico Express. Todos los derechos reservados.</p>
+        </section>
+    </main>
+
+    <footer style="padding: 50px 0; border-top: 1px solid rgba(192, 160, 128, 0.1);">
+        <div class="container" style="text-align: center; color: var(--text-dim);">
+            <p>&copy; 2026 Diseñográficoexpress.com - Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <!-- Botón Flotante WhatsApp -->
-    <a href="https://wa.me/521234567890?text=Hola,%20me%20gustar%C3%ADa%20informaci%C3%B3n%20sobre%20un%20servicio." class="whatsapp-float" target="_blank" id="wa-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
-        </svg>
-        <span class="tooltip">¡Habla con nuestra IA!</span>
-    </a>
-
     <script src="script.js"></script>
     <script>
-      lucide.createIcons();
+        // Initialize Lucide Icons
+        lucide.createIcons();
     </script>
 </body>
 </html>

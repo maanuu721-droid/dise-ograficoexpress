@@ -1,50 +1,51 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Inicializar fade in animaciones on load
-    const fadeElements = document.querySelectorAll('.fade-in-up');
-    
-    setTimeout(() => {
-        fadeElements.forEach(el => {
-            el.classList.add('visible');
-        });
-    }, 100);
+// Initialize Lucide icons
+if (window.lucide) {
+    lucide.createIcons();
+}
 
-    // Navbar scroll effect
-    const navbar = document.querySelector('.navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(18, 24, 38, 0.9)';
-            navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.5)';
-        } else {
-            navbar.style.background = 'rgba(18, 24, 38, 0.6)';
-            navbar.style.boxShadow = 'none';
+// Scroll Reveal Animation
+const observerOptions = {
+    threshold: 0.1
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
         }
     });
+}, observerOptions);
 
-    // Intersection Observer para elementos scrolleables (pricing y portfolio)
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+document.querySelectorAll('.glass-card').forEach(card => {
+    card.style.opacity = "0";
+    card.style.transform = "translateY(30px)";
+    card.style.transition = "all 0.8s ease-out";
+    observer.observe(card);
+});
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                // No un-observe if you want it to happen only once
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
+// Logo Parallax Effect
+const logo = document.getElementById('main-logo');
+window.addEventListener('mousemove', (e) => {
+    if (!logo) return;
+    
+    const x = (window.innerWidth / 2 - e.pageX) / 60;
+    const y = (window.innerHeight / 2 - e.pageY) / 60;
+    
+    logo.style.transform = `rotateY(${x}deg) rotateX(${y}deg) scale(1.02)`;
+});
 
-    const cards = document.querySelectorAll('.pricing-card, .masonry-item');
-    cards.forEach(card => {
-        card.classList.add('fade-in-up');
-        observer.observe(card);
-    });
-
-    // Placeholder image paths if not generated yet
-    const heroPlaceholder = document.getElementById('heroPlaceholder');
-    heroPlaceholder.addEventListener('error', function() {
-        this.src = 'https://images.unsplash.com/photo-1558655146-d09347e92766?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
-    });
+// Header scroll effect
+const header = document.querySelector('header');
+window.addEventListener('scroll', () => {
+    if (!header) return;
+    if (window.scrollY > 50) {
+        header.style.padding = "10px 0";
+        header.style.background = "rgba(11, 15, 25, 0.95)";
+        header.style.boxShadow = "0 5px 20px rgba(0,0,0,0.5)";
+    } else {
+        header.style.padding = "20px 0";
+        header.style.background = "rgba(11, 15, 25, 0.8)";
+        header.style.boxShadow = "none";
+    }
 });
