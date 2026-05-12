@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Pro & Brand | Diseño Gráfico Express</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .detail-hero { padding: 150px 0 60px; text-align: center; }
+        .feature-list { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-top: 40px; }
+        .back-btn { display: inline-block; margin-bottom: 30px; color: var(--accent-gold); text-decoration: none; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-content">
+            <div class="brand-font" style="font-weight: 700; color: var(--accent-gold); font-family: 'Cinzel', serif;">DGE</div>
+            <nav><a href="../index.html" class="back-btn"><i data-lucide="arrow-left" style="width: 16px; vertical-align: middle;"></i> Volver</a></nav>
+        </div>
+    </header>
+
+    <main class="container detail-hero">
+        <h1 style="font-size: 3rem; margin-bottom: 20px;">Web Pro & Brand</h1>
+        <div class="price-tag" style="font-size: 4rem;">$3,000 MXN</div>
+        
+        <div class="glass-card" style="max-width: 800px; margin: 40px auto;">
+            <h2>Tu Marca, Tu Web, Tu Poder</h2>
+            <p style="margin: 20px 0; color: var(--text-dim);">El paquete definitivo para negocios que quieren nacer con una identidad profesional completa y una web robusta.</p>
+            
+            <div class="feature-list">
+                <div class="feature-item"><i data-lucide="check" style="color: var(--accent-orange);"></i> <b>Diseño de Logotipo:</b> 3 conceptos originales y revisiones ilimitadas.</div>
+                <div class="feature-item"><i data-lucide="check" style="color: var(--accent-orange);"></i> <b>Web Multi-sección:</b> Hasta 5 secciones (Inicio, Nosotros, Servicios, Galería, Contacto).</div>
+                <div class="feature-item"><i data-lucide="check" style="color: var(--accent-orange);"></i> <b>Manual de Identidad:</b> Guía de uso de marca para que nunca pierdas tu esencia.</div>
+                <div class="feature-item"><i data-lucide="check" style="color: var(--accent-orange);"></i> <b>Hosting y Dominio:</b> 1 año de alojamiento premium incluido.</div>
+                <div class="feature-item"><i data-lucide="check" style="color: var(--accent-orange);"></i> <b>Correos Corporativos:</b> Hasta 3 cuentas con tu propio dominio.</div>
+                <div class="feature-item"><i data-lucide="check" style="color: var(--accent-orange);"></i> <b>Optimización SEO Pro:</b> Mejor posicionamiento en buscadores.</div>
+            </div>
+
+            <a href="https://wa.me/521234567890?text=Hola,%20me%20interesa%20el%20paquete%20Web%20Pro" class="btn-primary" style="margin-top: 40px; width: 100%; font-size: 1.2rem;">¡Consolidar mi Marca!</a>
+        </div>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

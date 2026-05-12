@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logotipo Épico | Diseño Gráfico Express</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .detail-hero { padding: 150px 0 60px; text-align: center; }
+        .feature-list { display: grid; grid-template-columns: 1fr; gap: 20px; text-align: left; margin-top: 40px; }
+        .back-btn { display: inline-block; margin-bottom: 30px; color: var(--accent-gold); text-decoration: none; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-content">
+            <div class="brand-font" style="font-weight: 700; color: var(--accent-gold); font-family: 'Cinzel', serif;">DGE</div>
+            <nav><a href="../index.html" class="back-btn"><i data-lucide="arrow-left" style="width: 16px; vertical-align: middle;"></i> Volver</a></nav>
+        </div>
+    </header>
+
+    <main class="container detail-hero">
+        <h1 style="font-size: 3rem; margin-bottom: 20px;">Logotipo Épico</h1>
+        <div class="price-tag" style="font-size: 4rem;">$1,200 MXN</div>
+        
+        <div class="glass-card" style="max-width: 800px; margin: 40px auto;">
+            <h2>El Alma Visual de tu Negocio</h2>
+            <p style="margin: 20px 0; color: var(--text-dim);">No diseñamos dibujos, forjamos identidades que comunican poder, confianza y velocidad.</p>
+            
+            <div class="feature-list">
+                <div class="feature-item"><i data-lucide="check" style="color: var(--accent-orange);"></i> <b>3 Propuestas Originales:</b> Diseños únicos basados en tu personalidad de marca.</div>
+                <div class="feature-item"><i data-lucide="check" style="color: var(--accent-orange);"></i> <b>Formatos Vectoriales:</b> Tu logo en SVG, AI, PDF para que lo imprimas en cualquier tamaño.</div>
+                <div class="feature-item"><i data-lucide="check" style="color: var(--accent-orange);"></i> <b>Variaciones de Color:</b> Versiones en blanco, negro y color principal.</div>
+                <div class="feature-item"><i data-lucide="check" style="color: var(--accent-orange);"></i> <b>Icono de Perfil:</b> Adaptado para redes sociales (Instagram, WhatsApp, Facebook).</div>
+            </div>
+
+            <a href="https://wa.me/521234567890?text=Hola,%20quiero%20un%20Logotipo%20Épico" class="btn-primary" style="margin-top: 40px; width: 100%; font-size: 1.2rem;">¡Forjar mi Identidad!</a>
+        </div>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Marca | Diseño Gráfico Express</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .detail-hero { padding: 150px 0 60px; text-align: center; }
+        .feature-list { display: grid; grid-template-columns: 1fr; gap: 20px; text-align: left; margin-top: 40px; }
+        .back-btn { display: inline-block; margin-bottom: 30px; color: var(--accent-gold); text-decoration: none; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-content">
+            <div class="brand-font" style="font-weight: 700; color: var(--accent-gold); font-family: 'Cinzel', serif;">DGE</div>
+            <nav><a href="../index.html" class="back-btn"><i data-lucide="arrow-left" style="width: 16px; vertical-align: middle;"></i> Volver</a></nav>
+        </div>
+    </header>
+
+    <main class="container detail-hero">
+        <h1 style="font-size: 3rem; margin-bottom: 20px;">Manual de Marca</h1>
+        <div class="price-tag" style="font-size: 4rem;">$2,500 MXN</div>
+        
+        <div class="glass-card" style="max-width: 800px; margin: 40px auto;">
+            <h2>La Biblia de tu Identidad</h2>
+            <p style="margin: 20px 0; color: var(--text-dim);">Un documento maestro que garantiza que tu marca se vea consistente y profesional en cualquier lugar del mundo.</p>
+            
+            <div class="feature-list">
+                <div class="feature-item"><i data-lucide="check" style="color: var(--accent-orange);"></i> <b>Paleta de Colores:</b> Códigos exactos (HEX, RGB, CMYK) para impresión y digital.</div>
+                <div class="feature-item"><i data-lucide="check" style="color: var(--accent-orange);"></i> <b>Sistemas Tipográficos:</b> Selección de fuentes que transmiten tu mensaje.</div>
+                <div class="feature-item"><i data-lucide="check" style="color: var(--accent-orange);"></i> <b>Usos Permitidos:</b> Guía visual de cómo aplicar tu logo en fondos claros y oscuros.</div>
+                <div class="feature-item"><i data-lucide="check" style="color: var(--accent-orange);"></i> <b>Tono de Voz:</b> Lineamientos de cómo debe "hablar" tu marca a sus clientes.</div>
+            </div>
+
+            <a href="https://wa.me/521234567890?text=Hola,%20necesito%20un%20Manual%20de%20Marca" class="btn-primary" style="margin-top: 40px; width: 100%; font-size: 1.2rem;">¡Obtener mi Manual!</a>
+        </div>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
