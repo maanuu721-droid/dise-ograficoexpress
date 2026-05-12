@@ -205,6 +205,77 @@ header {
     100% { transform: scale(1.03); filter: drop-shadow(0 0 40px rgba(255, 138, 0, 0.5)); }
 }
 
+/* --- Pricing Section --- */
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.price-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    margin: 20px 0;
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+}
+
+.price-features {
+    list-style: none;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.price-features li {
+    margin-bottom: 12px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.price-features li i {
+    color: var(--accent-orange);
+    width: 18px;
+}
+
+/* Elite Tier $100k */
+.pricing-card-elite {
+    border: 2px solid var(--accent-orange) !important;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(255, 138, 0, 0.1) 0%, var(--bg-card) 100%) !important;
+}
+
+.pricing-card-elite::before {
+    content: 'ELITE PERFORMANCE';
+    position: absolute;
+    top: 15px;
+    right: -35px;
+    background: var(--grad-fire);
+    color: white;
+    padding: 5px 40px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    transform: rotate(45deg);
+}
+
+.pricing-card-elite .price-tag {
+    background: var(--grad-fire);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.pricing-card-elite:hover {
+    box-shadow: 0 0 50px rgba(255, 138, 0, 0.4);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .hero { padding-top: 100px; }
