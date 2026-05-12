@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Sencilla | Diseño Gráfico Express</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .detail-hero {
+            padding: 150px 0 60px;
+            text-align: center;
+        }
+        .feature-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            text-align: left;
+            margin-top: 40px;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: var(--accent-gold);
+            text-decoration: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-content">
+            <div class="brand-font" style="font-weight: 700; color: var(--accent-gold); font-family: 'Cinzel', serif;">DGE</div>
+            <nav>
+                <a href="../index.html" class="back-btn"><i data-lucide="arrow-left" style="width: 16px; vertical-align: middle;"></i> Volver al Inicio</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container detail-hero">
+        <a href="../index.html#web" class="back-btn">← Volver a Web</a>
+        <h1 style="font-size: 3rem; margin-bottom: 20px;">Web Sencilla</h1>
+        <div class="price-tag" style="font-size: 4rem;">$2,100 MXN</div>
+        
+        <div class="glass-card" style="max-width: 800px; margin: 40px auto;">
+            <h2>Detalles del Paquete</h2>
+            <p style="margin: 20px 0; color: var(--text-dim);">La solución perfecta para profesionales y negocios que necesitan una presencia digital rápida, elegante y efectiva.</p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <i data-lucide="check" style="color: var(--accent-orange);"></i>
+                    <b>Diseño Responsivo:</b> Tu web se verá perfecta en celulares, tablets y computadoras.
+                </div>
+                <div class="feature-item">
+                    <i data-lucide="check" style="color: var(--accent-orange);"></i>
+                    <b>Landing Page Única:</b> Estructura de una sola página diseñada para convertir visitantes en clientes.
+                </div>
+                <div class="feature-item">
+                    <i data-lucide="check" style="color: var(--accent-orange);"></i>
+                    <b>Botón de WhatsApp:</b> Integración directa para que tus clientes te contacten con un clic.
+                </div>
+                <div class="feature-item">
+                    <i data-lucide="check" style="color: var(--accent-orange);"></i>
+                    <b>SEO Básico:</b> Optimización inicial para que Google encuentre tu negocio.
+                </div>
+                <div class="feature-item">
+                    <i data-lucide="zap" style="color: var(--accent-orange);"></i>
+                    <b>Velocidad Épica:</b> Carga ultra-rápida para que nadie se vaya de tu sitio.
+                </div>
+                <div class="feature-item">
+                    <i data-lucide="shield" style="color: var(--accent-orange);"></i>
+                    <b>Seguridad SSL:</b> Certificado de seguridad incluido para proteger a tus usuarios.
+                </div>
+            </div>
+
+            <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(192, 160, 128, 0.1);">
+                <p><b>Tiempo de entrega:</b> 3 a 5 días hábiles.</p>
+                <p style="color: #ff4d4d; margin-top: 10px;">* Este paquete no incluye diseño de logotipo.</p>
+            </div>
+
+            <a href="https://wa.me/521234567890?text=Hola,%20me%20interesa%20el%20paquete%20Web%20Sencilla" class="btn-primary" style="margin-top: 40px; width: 100%; font-size: 1.2rem;">¡Contratar Ahora!</a>
+        </div>
+    </main>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>
