@@ -1,0 +1,236 @@
+{
+  "name": "DGE - Agente WhatsApp Sofía",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dge-whatsapp-webhook",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "webhook-dge",
+      "name": "Webhook Evolution API",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.event }}",
+              "operation": "equals",
+              "value2": "messages.upsert"
+            }
+          ]
+        }
+      },
+      "id": "filter-messages",
+      "name": "Filtrar Solo Mensajes",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extraer información del mensaje\nconst data = $input.item.json.data;\nconst message = data.message;\nconst from = data.key.remoteJid;\nconst messageText = message.conversation || message.extendedTextMessage?.text || '';\nconst isAudio = !!message.audioMessage;\nconst audioUrl = isAudio ? message.audioMessage.url : null;\n\n// Extraer nombre del contacto\nconst pushName = data.pushName || 'Cliente';\n\n// Detectar paquete de interés desde el mensaje inicial\nlet paquete = 'General';\nif (messageText.includes('Web Sencilla')) paquete = 'Web Sencilla';\nelse if (messageText.includes('Web Pro')) paquete = 'Web Pro & Brand';\nelse if (messageText.includes('Tienda Online')) paquete = 'Tienda Online';\nelse if (messageText.includes('Agente de Ventas IA')) paquete = 'Agente IA';\nelse if (messageText.includes('Logotipo')) paquete = 'Logotipo Épico';\nelse if (messageText.includes('Manual de Marca')) paquete = 'Manual de Marca';\nelse if (messageText.includes('Flujos de Trabajo IA')) paquete = 'Flujos IA';\nelse if (messageText.includes('Chatbots')) paquete = 'Chatbots';\nelse if (messageText.includes('Community Manager')) paquete = 'Community Manager';\nelse if (messageText.includes('Pack Viral Reels')) paquete = 'Pack Reels';\nelse if (messageText.includes('Invitaciones')) paquete = 'Invitaciones';\nelse if (messageText.includes('Retoque')) paquete = 'Retoque Pro';\nelse if (messageText.includes('Restauración')) paquete = 'Restauración';\nelse if (messageText.includes('Fotomontajes')) paquete = 'Fotomontajes';\nelse if (messageText.includes('Pedido Especial')) paquete = 'Pedido Especial';\n\nreturn {\n  from,\n  pushName,\n  messageText,\n  isAudio,\n  audioUrl,\n  paquete,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "extract-message-data",
+      "name": "Extraer Datos del Mensaje",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [650, 200]
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * 5) + 3 }}",
+        "unit": "seconds"
+      },
+      "id": "delay-human",
+      "name": "Delay Humano (3-8s)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [850, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.EVOLUTION_API_URL }}/message/sendText/{{ $env.DGE_INSTANCE_NAME }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.EVOLUTION_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $json.from }}"
+            },
+            {
+              "name": "text",
+              "value": "✍️ _Escribiendo..._"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-typing",
+      "name": "Enviar 'Escribiendo...'",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [1050, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Construir el prompt del agente Sofía\nconst pushName = $json.pushName;\nconst messageText = $json.messageText;\nconst paquete = $json.paquete;\n\nconst systemPrompt = `Eres Sofía, asistente virtual de Diseño Gráfico Express (DGE). Tu misión es dar una bienvenida cálida a cada cliente, recopilar información clave sobre su proyecto y mantenerlo entretenido mientras uno de nuestros diseñadores humanos toma su caso.\n\n**Tono**: Amigable, profesional, entusiasta pero no robótico. Usa emojis con moderación.\n\n**Reglas**:\n1. NUNCA des precios exactos - Solo menciona los rangos de la web si el cliente pregunta\n2. NUNCA prometas tiempos de entrega - Di \"nuestro equipo te dará tiempos exactos\"\n3. NUNCA cierres ventas - Tu trabajo es recopilar info y pasar el caso\n4. Haz preguntas de forma natural, 1-2 a la vez\n5. Muestra interés genuino en el proyecto del cliente\n\n**Información a recopilar**:\n- Nombre del negocio/marca\n- Giro/industria\n- Qué necesita específicamente\n- Objetivo (qué quiere lograr)\n- Urgencia\n- Referencias visuales (si tiene)\n\n**Paquete de interés**: ${paquete}\n**Nombre del cliente**: ${pushName}\n\nResponde de forma conversacional y amigable.`;\n\nconst userMessage = messageText;\n\nreturn {\n  systemPrompt,\n  userMessage,\n  pushName,\n  paquete,\n  from: $json.from\n};"
+      },
+      "id": "build-prompt",
+      "name": "Construir Prompt Sofía",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [1250, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "key",
+              "value": "={{ $env.GEMINI_KEY }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [{\n    \"parts\": [{\n      \"text\": \"{{ $json.systemPrompt }}\\n\\nCliente: {{ $json.userMessage }}\"\n    }]\n  }],\n  \"generationConfig\": {\n    \"temperature\": 0.9,\n    \"maxOutputTokens\": 500\n  }\n}",
+        "options": {}
+      },
+      "id": "call-gemini",
+      "name": "Llamar a Gemini",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [1450, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extraer respuesta de Gemini\nconst response = $json.candidates[0].content.parts[0].text;\n\n// Calcular delay proporcional (1 segundo por cada 20 palabras)\nconst wordCount = response.split(' ').length;\nconst delaySeconds = Math.ceil(wordCount / 20);\n\nreturn {\n  response,\n  delaySeconds,\n  from: $('Construir Prompt Sofía').item.json.from,\n  pushName: $('Construir Prompt Sofía').item.json.pushName,\n  paquete: $('Construir Prompt Sofía').item.json.paquete\n};"
+      },
+      "id": "extract-response",
+      "name": "Extraer Respuesta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [1650, 200]
+    },
+    {
+      "parameters": {
+        "amount": "={{ $json.delaySeconds }}",
+        "unit": "seconds"
+      },
+      "id": "delay-proportional",
+      "name": "Delay Proporcional",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [1850, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.EVOLUTION_API_URL }}/message/sendText/{{ $env.DGE_INSTANCE_NAME }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.EVOLUTION_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $json.from }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.response }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-response",
+      "name": "Enviar Respuesta",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [2050, 200]
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "id": "respond-webhook",
+      "name": "Responder Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [2250, 200]
+    }
+  ],
+  "connections": {
+    "Webhook Evolution API": {
+      "main": [[{"node": "Filtrar Solo Mensajes", "type": "main", "index": 0}]]
+    },
+    "Filtrar Solo Mensajes": {
+      "main": [[{"node": "Extraer Datos del Mensaje", "type": "main", "index": 0}]]
+    },
+    "Extraer Datos del Mensaje": {
+      "main": [[{"node": "Delay Humano (3-8s)", "type": "main", "index": 0}]]
+    },
+    "Delay Humano (3-8s)": {
+      "main": [[{"node": "Enviar 'Escribiendo...'", "type": "main", "index": 0}]]
+    },
+    "Enviar 'Escribiendo...'": {
+      "main": [[{"node": "Construir Prompt Sofía", "type": "main", "index": 0}]]
+    },
+    "Construir Prompt Sofía": {
+      "main": [[{"node": "Llamar a Gemini", "type": "main", "index": 0}]]
+    },
+    "Llamar a Gemini": {
+      "main": [[{"node": "Extraer Respuesta", "type": "main", "index": 0}]]
+    },
+    "Extraer Respuesta": {
+      "main": [[{"node": "Delay Proporcional", "type": "main", "index": 0}]]
+    },
+    "Delay Proporcional": {
+      "main": [[{"node": "Enviar Respuesta", "type": "main", "index": 0}]]
+    },
+    "Enviar Respuesta": {
+      "main": [[{"node": "Responder Webhook", "type": "main", "index": 0}]]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "1",
+  "id": "dge-whatsapp-agent"
+}
