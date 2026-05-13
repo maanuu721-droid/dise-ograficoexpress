@@ -104,10 +104,35 @@ header {
     border-bottom: 1px solid rgba(192, 160, 128, 0.2);
 }
 
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .nav-content nav {
     display: flex;
     align-items: center;
     gap: 25px;
+}
+
+.menu-toggle {
+    display: none;
+    background: rgba(192, 160, 128, 0.1);
+    border: 1px solid rgba(192, 160, 128, 0.3);
+    color: var(--accent-gold);
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 1001;
+    transition: var(--trans-smooth);
+}
+
+.menu-toggle:hover {
+    background: rgba(192, 160, 128, 0.2);
+    border-color: var(--accent-orange);
+    color: var(--accent-orange);
+    box-shadow: 0 0 15px rgba(255, 138, 0, 0.3);
 }
 
 .nav-content nav a {
@@ -291,8 +316,55 @@ header {
     box-shadow: 0 0 50px rgba(255, 138, 0, 0.4);
 }
 
-/* Responsive */
+/* Responsive Navigation */
 @media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-content nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        height: 100vh;
+        background: rgba(11, 15, 25, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        transition: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+        z-index: 1000;
+        border-left: 1px solid rgba(192, 160, 128, 0.2);
+    }
+
+    .nav-content nav.active {
+        right: 0;
+    }
+
+    .nav-content nav a {
+        font-size: 1.5rem;
+        font-family: 'Cinzel', serif;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: 0.5s all 0.3s ease;
+    }
+
+    .nav-content nav.active a {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Staggered animation for links */
+    .nav-content nav.active a:nth-child(1) { transition-delay: 0.1s; }
+    .nav-content nav.active a:nth-child(2) { transition-delay: 0.2s; }
+    .nav-content nav.active a:nth-child(3) { transition-delay: 0.3s; }
+    .nav-content nav.active a:nth-child(4) { transition-delay: 0.4s; }
+    .nav-content nav.active a:nth-child(5) { transition-delay: 0.5s; }
+    .nav-content nav.active a:nth-child(6) { transition-delay: 0.6s; }
+
     .hero { padding-top: 100px; }
     .hero-logo { max-width: 280px; }
 }

@@ -49,3 +49,26 @@ window.addEventListener('scroll', () => {
         header.style.boxShadow = "none";
     }
 });
+
+// Mobile Menu Toggle
+const menuToggle = document.getElementById('menu-toggle');
+const mainNav = document.getElementById('main-nav');
+const menuIcon = menuToggle.querySelector('i');
+
+menuToggle.addEventListener('click', () => {
+    mainNav.classList.toggle('active');
+    
+    // Toggle between menu and x icon
+    const isOpened = mainNav.classList.contains('active');
+    menuIcon.setAttribute('data-lucide', isOpened ? 'x' : 'menu');
+    lucide.createIcons();
+});
+
+// Close menu when clicking a link
+document.querySelectorAll('#main-nav a').forEach(link => {
+    link.addEventListener('click', () => {
+        mainNav.classList.remove('active');
+        menuIcon.setAttribute('data-lucide', 'menu');
+        lucide.createIcons();
+    });
+});

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artes Especiales | Diseño Gráfico Express</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .detail-hero { padding: 150px 0 60px; text-align: center; }
+        .feature-list { display: grid; grid-template-columns: 1fr; gap: 20px; text-align: left; margin-top: 40px; }
+        .back-btn { display: inline-block; margin-bottom: 30px; color: var(--accent-gold); text-decoration: none; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-content">
+            <div class="brand-font" style="font-weight: 700; color: var(--accent-gold); font-family: 'Cinzel', serif;">DGE</div>
+            <nav><a href="../index.html" class="back-btn"><i data-lucide="arrow-left" style="width: 16px; vertical-align: middle;"></i> Volver</a></nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div style="text-align: center; padding-top: 150px;">
+            <a href="../index.html#artes" class="back-btn">← Volver a Artes Especiales</a>
+            <h1 style="font-size: 3.5rem; margin-bottom: 10px; font-family: 'Cinzel', serif;">Artes Especiales</h1>
+            <p style="color: var(--accent-gold); font-size: 1.2rem; letter-spacing: 2px;">DONDE LA IMAGINACIÓN SE HACE REALIDAD</p>
+        </div>
+
+        <div class="glass-card" style="margin-top: 50px; padding: 0; overflow: hidden; border: 1px solid rgba(192, 160, 128, 0.2);">
+            <img src="../assets/artes_especiales.png" alt="Artes Especiales Power" style="width: 100%; height: 400px; object-fit: cover; opacity: 0.8;">
+            <div style="padding: 40px;">
+                <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; align-items: center;">
+                    <div>
+                        <h2 style="font-size: 2rem; color: var(--accent-gold);">Servicios de Precisión y Magia Digital</h2>
+                        <p style="margin: 20px 0; line-height: 1.8; font-size: 1.1rem; color: var(--text-dim);">
+                            En nuestro laboratorio creativo, no solo diseñamos; transformamos. Desde la recuperación de recuerdos invaluables hasta la creación de mundos imposibles, cada píxel es tratado con la maestría que solo DGE puede ofrecer.
+                        </p>
+                        <div class="price-tag" style="font-size: 2rem; margin: 10px 0;">Desde $600 MXN</div>
+                    </div>
+                    <div class="glass-card" style="background: rgba(255, 255, 255, 0.03); border: 1px dashed var(--accent-gold);">
+                        <h3 style="margin-bottom: 15px;">Nuestra Especialidad:</h3>
+                        <ul class="price-features" style="margin: 0;">
+                            <li><i data-lucide="check"></i> Invitaciones Digitales/Impresas</li>
+                            <li><i data-lucide="check"></i> Restauración de Fotos Antiguas</li>
+                            <li><i data-lucide="check"></i> Retoque de Belleza & Moda</li>
+                            <li><i data-lucide="check"></i> Fotomontajes Complejos</li>
+                            <li><i data-lucide="check"></i> Pedidos Personalizados</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detalles de Servicios -->
+        <div style="margin-top: 80px; text-align: center;">
+            <h2 style="font-family: 'Cinzel', serif; margin-bottom: 40px;">Domina el Arte Visual</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                <div class="glass-card">
+                    <i data-lucide="mail" style="width: 40px; height: 40px; color: var(--accent-orange); margin-bottom: 20px;"></i>
+                    <h3>Invitaciones de Élite</h3>
+                    <p style="color: var(--text-dim);">Creamos la puerta de entrada a tu evento. Diseños que impactan y elevan la expectativa de tus invitados.</p>
+                </div>
+                <div class="glass-card">
+                    <i data-lucide="history" style="width: 40px; height: 40px; color: var(--accent-orange); margin-bottom: 20px;"></i>
+                    <h3>Restauración Maestra</h3>
+                    <p style="color: var(--text-dim);">No dejes que el tiempo borre tus recuerdos. Devolvemos la vida a fotos dañadas con técnicas de vanguardia.</p>
+                </div>
+                <div class="glass-card">
+                    <i data-lucide="wand-2" style="width: 40px; height: 40px; color: var(--accent-orange); margin-bottom: 20px;"></i>
+                    <h3>Fotomontajes Épicos</h3>
+                    <p style="color: var(--text-dim);">Si puedes imaginarlo, podemos crearlo. Combinamos múltiples realidades en una sola imagen perfecta.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Frase Persuasiva -->
+        <div class="glass-card" style="margin-top: 100px; position: relative; height: 300px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+            <img src="../assets/artes_especiales.png" style="position: absolute; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.2) grayscale(0.2);">
+            <div style="position: relative; z-index: 2; text-align: center; padding: 20px;">
+                <h2 style="font-family: 'Cinzel', serif; font-size: 2.5rem; color: white; text-shadow: 0 0 20px rgba(255, 138, 0, 0.8);">
+                    "La realidad es el lienzo, nosotros somos el pincel."
+                </h2>
+                <p style="color: var(--accent-gold); font-size: 1.2rem; margin-top: 10px;">Transforma lo ordinario en algo legendario.</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 100px 0;">
+            <a href="https://wa.me/521234567890?text=Hola,%20tengo%20un%20pedido%20especial%20para%20Artes%20Especiales" class="btn-primary" style="padding: 20px 60px; font-size: 1.5rem;">¡Iniciar mi Pedido!</a>
+        </div>
+    </main>
+    <footer style="padding: 50px 0; border-top: 1px solid rgba(192, 160, 128, 0.1);">
+        <div class="container" style="text-align: center; color: var(--text-dim);">
+            <p>&copy; 2026 Diseñográficoexpress.com - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
