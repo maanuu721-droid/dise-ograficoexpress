@@ -104,20 +104,3 @@ dots.forEach((dot, index) => {
         sliderTimer = setInterval(nextSlide, slideInterval);
     });
 });
-
-// --- SOFÍA INTERACTIVE EFFECT ---
-window.addEventListener('mousemove', (e) => {
-    if (!sofiMascot) return;
-    
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
-    
-    const sofiRect = sofiMascot.getBoundingClientRect();
-    const sofiX = sofiRect.left + sofiRect.width / 2;
-    const sofiY = sofiRect.top + sofiRect.height / 2;
-    
-    const angleX = (mouseY - sofiY) / 30;
-    const angleY = (mouseX - sofiX) / -30;
-    
-    sofiMascot.style.transform = `translateY(${Math.sin(Date.now() / 1000) * 10}px) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
-});
