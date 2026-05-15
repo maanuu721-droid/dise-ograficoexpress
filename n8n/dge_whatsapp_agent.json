@@ -4,8 +4,8 @@
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "dge-whatsapp-webhook",
-        "responseMode": "lastNode",
+        "path": "dge-whatsapp-webhook-v2",
+        "responseMode": "onReceived",
         "options": {}
       },
       "id": "webhook-dge",
@@ -19,9 +19,10 @@
         "conditions": {
           "string": [
             {
-              "value1": "={{ $json.event }}",
-              "operation": "equals",
-              "value2": "messages.upsert"
+              "value1": "={{ $json.event || '' }}",
+              "operation": "contains",
+              "value2": "upsert",
+              "ignoreCase": true
             }
           ]
         }
@@ -34,7 +35,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Extraer información del mensaje\nconst data = $input.item.json.data;\nconst message = data.message;\nconst from = data.key.remoteJid;\nconst messageText = message.conversation || message.extendedTextMessage?.text || '';\nconst isAudio = !!message.audioMessage;\nconst audioUrl = isAudio ? message.audioMessage.url : null;\n\n// Extraer nombre del contacto\nconst pushName = data.pushName || 'Cliente';\n\n// Detectar paquete de interés desde el mensaje inicial\nlet paquete = 'General';\nif (messageText.includes('Web Sencilla')) paquete = 'Web Sencilla';\nelse if (messageText.includes('Web Pro')) paquete = 'Web Pro & Brand';\nelse if (messageText.includes('Tienda Online')) paquete = 'Tienda Online';\nelse if (messageText.includes('Agente de Ventas IA')) paquete = 'Agente IA';\nelse if (messageText.includes('Logotipo')) paquete = 'Logotipo Épico';\nelse if (messageText.includes('Manual de Marca')) paquete = 'Manual de Marca';\nelse if (messageText.includes('Flujos de Trabajo IA')) paquete = 'Flujos IA';\nelse if (messageText.includes('Chatbots')) paquete = 'Chatbots';\nelse if (messageText.includes('Community Manager')) paquete = 'Community Manager';\nelse if (messageText.includes('Pack Viral Reels')) paquete = 'Pack Reels';\nelse if (messageText.includes('Invitaciones')) paquete = 'Invitaciones';\nelse if (messageText.includes('Retoque')) paquete = 'Retoque Pro';\nelse if (messageText.includes('Restauración')) paquete = 'Restauración';\nelse if (messageText.includes('Fotomontajes')) paquete = 'Fotomontajes';\nelse if (messageText.includes('Pedido Especial')) paquete = 'Pedido Especial';\n\nreturn {\n  from,\n  pushName,\n  messageText,\n  isAudio,\n  audioUrl,\n  paquete,\n  timestamp: new Date().toISOString()\n};"
+        "jsCode": "// Extracción indestructible para Evolution API v1/v2\nfunction findKey(obj, targetKey) {\n  if (!obj || typeof obj !== 'object') return undefined;\n  if (targetKey in obj && obj[targetKey] !== null && obj[targetKey] !== undefined) return obj[targetKey];\n  for (const k in obj) {\n    const res = findKey(obj[k], targetKey);\n    if (res !== undefined) return res;\n  }\n  return undefined;\n}\n\nconst payload = $input.item.json;\n\n// Ignorar mensajes enviados por nosotros mismos para evitar bucles\nconst fromMe = findKey(payload, 'fromMe');\nif (fromMe === true) return [];\n\nconst remoteJid = findKey(payload, 'remoteJid');\nif (!remoteJid || remoteJid.includes('@g.us')) return []; // Ignorar grupos\n\n// El texto puede estar en conversation o text\nlet messageText = findKey(payload, 'conversation') || findKey(payload, 'text') || '';\nif (!messageText) return [];\n\nconst pushName = findKey(payload, 'pushName') || 'Cliente';\n\n// Detectar paquete de interés\nlet paquete = 'General';\nif (messageText.includes('Web Sencilla')) paquete = 'Web Sencilla';\nelse if (messageText.includes('Web Pro')) paquete = 'Web Pro & Brand';\nelse if (messageText.includes('Tienda Online')) paquete = 'Tienda Online';\nelse if (messageText.includes('Agente de Ventas IA')) paquete = 'Agente IA';\nelse if (messageText.includes('Logotipo')) paquete = 'Logotipo Épico';\nelse if (messageText.includes('Manual de Marca')) paquete = 'Manual de Marca';\n\nreturn {\n  from: remoteJid,\n  pushName,\n  messageText,\n  paquete,\n  timestamp: new Date().toISOString()\n};"
       },
       "id": "extract-message-data",
       "name": "Extraer Datos del Mensaje",
@@ -44,69 +45,93 @@
     },
     {
       "parameters": {
-        "amount": "={{ Math.floor(Math.random() * 5) + 3 }}",
-        "unit": "seconds"
+        "method": "POST",
+        "url": "https://vnxgzajtunmptgkahcar.supabase.co/rest/v1/dge_leads",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZueGd6YWp0dW5tcHRna2FoY2FyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTY5Mzg5OCwiZXhwIjoyMDg3MjY5ODk4fQ.HRjJ23KxWobnLUMGGgBOv3UMQrTn-qp-1GOWQFT5KGE" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZueGd6YWp0dW5tcHRna2FoY2FyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTY5Mzg5OCwiZXhwIjoyMDg3MjY5ODk4fQ.HRjJ23KxWobnLUMGGgBOv3UMQrTn-qp-1GOWQFT5KGE" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "resolution=merge-duplicates" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"phone\": \"{{ $json.from }}\",\n  \"name\": \"{{ $json.pushName }}\",\n  \"interest\": \"{{ $json.paquete }}\"\n}",
+        "options": {}
       },
-      "id": "delay-human",
-      "name": "Delay Humano (3-8s)",
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1,
-      "position": [850, 200]
+      "id": "upsert-lead",
+      "name": "Guardar Lead (CRM)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [850, 100],
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $env.EVOLUTION_API_URL }}/message/sendText/{{ $env.DGE_INSTANCE_NAME }}",
+        "url": "https://vnxgzajtunmptgkahcar.supabase.co/rest/v1/dge_chat_memory",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            {
-              "name": "apikey",
-              "value": "={{ $env.EVOLUTION_API_KEY }}"
-            }
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZueGd6YWp0dW5tcHRna2FoY2FyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTY5Mzg5OCwiZXhwIjoyMDg3MjY5ODk4fQ.HRjJ23KxWobnLUMGGgBOv3UMQrTn-qp-1GOWQFT5KGE" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZueGd6YWp0dW5tcHRna2FoY2FyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTY5Mzg5OCwiZXhwIjoyMDg3MjY5ODk4fQ.HRjJ23KxWobnLUMGGgBOv3UMQrTn-qp-1GOWQFT5KGE" },
+            { "name": "Content-Type", "value": "application/json" }
           ]
         },
         "sendBody": true,
-        "bodyParameters": {
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"session_id\": \"{{ $('Extraer Datos del Mensaje').item.json.from }}\",\n  \"message\": {\"role\": \"user\", \"content\": \"{{ $('Extraer Datos del Mensaje').item.json.messageText }}\"}\n}",
+        "options": {}
+      },
+      "id": "save-user-msg",
+      "name": "Guardar Msj Usuario",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [1050, 100],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://vnxgzajtunmptgkahcar.supabase.co/rest/v1/dge_chat_memory?session_id=eq.{{ $('Extraer Datos del Mensaje').item.json.from }}&order=created_at.desc&limit=15",
+        "sendHeaders": true,
+        "headerParameters": {
           "parameters": [
-            {
-              "name": "number",
-              "value": "={{ $json.from }}"
-            },
-            {
-              "name": "text",
-              "value": "✍️ _Escribiendo..._"
-            }
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZueGd6YWp0dW5tcHRna2FoY2FyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTY5Mzg5OCwiZXhwIjoyMDg3MjY5ODk4fQ.HRjJ23KxWobnLUMGGgBOv3UMQrTn-qp-1GOWQFT5KGE" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZueGd6YWp0dW5tcHRna2FoY2FyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTY5Mzg5OCwiZXhwIjoyMDg3MjY5ODk4fQ.HRjJ23KxWobnLUMGGgBOv3UMQrTn-qp-1GOWQFT5KGE" }
           ]
         },
         "options": {}
       },
-      "id": "send-typing",
-      "name": "Enviar 'Escribiendo...'",
+      "id": "get-memory",
+      "name": "Recuperar Memoria",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
-      "position": [1050, 200]
+      "position": [1250, 100],
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
-        "jsCode": "// Construir el prompt del agente Sofía\nconst pushName = $json.pushName;\nconst messageText = $json.messageText;\nconst paquete = $json.paquete;\n\nconst systemPrompt = `Eres Sofía, asistente virtual de Diseño Gráfico Express (DGE). Tu misión es dar una bienvenida cálida a cada cliente, recopilar información clave sobre su proyecto y mantenerlo entretenido mientras uno de nuestros diseñadores humanos toma su caso.\n\n**Tono**: Amigable, profesional, entusiasta pero no robótico. Usa emojis con moderación.\n\n**Reglas**:\n1. NUNCA des precios exactos - Solo menciona los rangos de la web si el cliente pregunta\n2. NUNCA prometas tiempos de entrega - Di \"nuestro equipo te dará tiempos exactos\"\n3. NUNCA cierres ventas - Tu trabajo es recopilar info y pasar el caso\n4. Haz preguntas de forma natural, 1-2 a la vez\n5. Muestra interés genuino en el proyecto del cliente\n\n**Información a recopilar**:\n- Nombre del negocio/marca\n- Giro/industria\n- Qué necesita específicamente\n- Objetivo (qué quiere lograr)\n- Urgencia\n- Referencias visuales (si tiene)\n\n**Paquete de interés**: ${paquete}\n**Nombre del cliente**: ${pushName}\n\nResponde de forma conversacional y amigable.`;\n\nconst userMessage = messageText;\n\nreturn {\n  systemPrompt,\n  userMessage,\n  pushName,\n  paquete,\n  from: $json.from\n};"
+        "jsCode": "// Construir el prompt con memoria\nconst data = $('Extraer Datos del Mensaje').item.json;\nlet history = $json;\n\n// Si history es un error o undefined (por onError: continueErrorOutput), lo ignoramos\nif (!Array.isArray(history)) {\n  history = [];\n}\n\nhistory.reverse(); // Convertir a ascendente (antiguos primero)\n\nconst systemPrompt = `Eres Sofía, asistente virtual de Diseño Gráfico Express (DGE). Tu misión es dar una bienvenida cálida, recopilar información sobre el proyecto y mantener al cliente entretenido mientras lo pasas a un humano.\\n\\n**Reglas**:\\n1. NUNCA des precios exactos.\\n2. NUNCA prometas tiempos de entrega.\\n3. Haz preguntas de forma natural, 1 a la vez.\\n4. Muestra interés genuino.\\n\\n**Paquete de interés**: ${data.paquete}\\n**Nombre**: ${data.pushName}\\n\\nResponde siempre en primera persona como Sofía, de forma conversacional.`;\n\nconst contents = [];\nhistory.forEach(row => {\n  if(row.message) {\n    contents.push({\n      role: row.message.role === 'assistant' ? 'model' : 'user',\n      parts: [{ text: row.message.content }]\n    });\n  }\n});\n\nif (contents.length === 0) {\n  // Si no hay historial, al menos agregar el mensaje actual que extrajimos\n  contents.push({\n    role: 'user',\n    parts: [{ text: data.messageText }]\n  });\n}\n\n// Add system instructions via gemini structure\nconst geminiPayload = {\n  system_instruction: { parts: [ { text: systemPrompt } ] },\n  contents: contents,\n  generationConfig: {\n    temperature: 0.8,\n    maxOutputTokens: 300\n  }\n};\n\nreturn {\n  geminiPayload,\n  from: data.from\n};"
       },
       "id": "build-prompt",
-      "name": "Construir Prompt Sofía",
+      "name": "Construir Prompt con Memoria",
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
-      "position": [1250, 200]
+      "position": [1450, 100]
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent",
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
             {
               "name": "key",
-              "value": "={{ $env.GEMINI_KEY }}"
+              "value": "AIzaSyDo99OTF2FSoNkJ_R_n4sIBE5vX9MsosyM"
             }
           ]
         },
@@ -121,69 +146,72 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"contents\": [{\n    \"parts\": [{\n      \"text\": \"{{ $json.systemPrompt }}\\n\\nCliente: {{ $json.userMessage }}\"\n    }]\n  }],\n  \"generationConfig\": {\n    \"temperature\": 0.9,\n    \"maxOutputTokens\": 500\n  }\n}",
+        "jsonBody": "={{ JSON.stringify($json.geminiPayload) }}",
         "options": {}
       },
       "id": "call-gemini",
       "name": "Llamar a Gemini",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
-      "position": [1450, 200]
+      "position": [1650, 100]
     },
     {
       "parameters": {
-        "jsCode": "// Extraer respuesta de Gemini\nconst response = $json.candidates[0].content.parts[0].text;\n\n// Calcular delay proporcional (1 segundo por cada 20 palabras)\nconst wordCount = response.split(' ').length;\nconst delaySeconds = Math.ceil(wordCount / 20);\n\nreturn {\n  response,\n  delaySeconds,\n  from: $('Construir Prompt Sofía').item.json.from,\n  pushName: $('Construir Prompt Sofía').item.json.pushName,\n  paquete: $('Construir Prompt Sofía').item.json.paquete\n};"
+        "jsCode": "let response = '';\ntry {\n  if ($json.candidates && $json.candidates[0] && $json.candidates[0].content) {\n    response = $json.candidates[0].content.parts[0].text;\n  } else {\n    response = \"¡Hola! Tuve un glitch digital. ¿Podrías repetirme lo último? Soy Sofía.\";\n  }\n} catch (e) {\n  response = \"¡Hola! Soy Sofía. ¿En qué podemos ayudarte hoy?\";\n}\n\nreturn {\n  response,\n  from: $('Construir Prompt con Memoria').item.json.from\n};"
       },
       "id": "extract-response",
       "name": "Extraer Respuesta",
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
-      "position": [1650, 200]
-    },
-    {
-      "parameters": {
-        "amount": "={{ $json.delaySeconds }}",
-        "unit": "seconds"
-      },
-      "id": "delay-proportional",
-      "name": "Delay Proporcional",
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1,
-      "position": [1850, 200]
+      "position": [1850, 100]
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "={{ $env.EVOLUTION_API_URL }}/message/sendText/{{ $env.DGE_INSTANCE_NAME }}",
+        "url": "https://vnxgzajtunmptgkahcar.supabase.co/rest/v1/dge_chat_memory",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZueGd6YWp0dW5tcHRna2FoY2FyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTY5Mzg5OCwiZXhwIjoyMDg3MjY5ODk4fQ.HRjJ23KxWobnLUMGGgBOv3UMQrTn-qp-1GOWQFT5KGE" },
+            { "name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZueGd6YWp0dW5tcHRna2FoY2FyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTY5Mzg5OCwiZXhwIjoyMDg3MjY5ODk4fQ.HRjJ23KxWobnLUMGGgBOv3UMQrTn-qp-1GOWQFT5KGE" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"session_id\": \"{{ $json.from }}\",\n  \"message\": {\"role\": \"assistant\", \"content\": \"{{ $json.response }}\"}\n}",
+        "options": {}
+      },
+      "id": "save-ai-msg",
+      "name": "Guardar Msj IA",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [2050, 100],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://77.243.85.41:8080/message/sendText/DGE",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
               "name": "apikey",
-              "value": "={{ $env.EVOLUTION_API_KEY }}"
+              "value": "BahiaGo2026SecretKey"
             }
           ]
         },
         "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "number",
-              "value": "={{ $json.from }}"
-            },
-            {
-              "name": "text",
-              "value": "={{ $json.response }}"
-            }
-          ]
-        },
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"number\": \"{{ $json.from }}\",\n  \"textMessage\": {\n    \"text\": \"{{ $('Extraer Respuesta').item.json.response }}\"\n  }\n}",
         "options": {}
       },
       "id": "send-response",
       "name": "Enviar Respuesta",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
-      "position": [2050, 200]
+      "position": [2250, 100]
     },
     {
       "parameters": {
@@ -194,35 +222,38 @@
       "name": "Responder Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
-      "position": [2250, 200]
+      "position": [2450, 100]
     }
   ],
   "connections": {
     "Webhook Evolution API": {
-      "main": [[{"node": "Filtrar Solo Mensajes", "type": "main", "index": 0}]]
+      "main": [[{"node": "Extraer Datos del Mensaje", "type": "main", "index": 0}]]
     },
     "Filtrar Solo Mensajes": {
       "main": [[{"node": "Extraer Datos del Mensaje", "type": "main", "index": 0}]]
     },
     "Extraer Datos del Mensaje": {
-      "main": [[{"node": "Delay Humano (3-8s)", "type": "main", "index": 0}]]
+      "main": [[{"node": "Guardar Lead (CRM)", "type": "main", "index": 0}]]
     },
-    "Delay Humano (3-8s)": {
-      "main": [[{"node": "Enviar 'Escribiendo...'", "type": "main", "index": 0}]]
+    "Guardar Lead (CRM)": {
+      "main": [[{"node": "Guardar Msj Usuario", "type": "main", "index": 0}]]
     },
-    "Enviar 'Escribiendo...'": {
-      "main": [[{"node": "Construir Prompt Sofía", "type": "main", "index": 0}]]
+    "Guardar Msj Usuario": {
+      "main": [[{"node": "Recuperar Memoria", "type": "main", "index": 0}]]
     },
-    "Construir Prompt Sofía": {
+    "Recuperar Memoria": {
+      "main": [[{"node": "Construir Prompt con Memoria", "type": "main", "index": 0}]]
+    },
+    "Construir Prompt con Memoria": {
       "main": [[{"node": "Llamar a Gemini", "type": "main", "index": 0}]]
     },
     "Llamar a Gemini": {
       "main": [[{"node": "Extraer Respuesta", "type": "main", "index": 0}]]
     },
     "Extraer Respuesta": {
-      "main": [[{"node": "Delay Proporcional", "type": "main", "index": 0}]]
+      "main": [[{"node": "Guardar Msj IA", "type": "main", "index": 0}]]
     },
-    "Delay Proporcional": {
+    "Guardar Msj IA": {
       "main": [[{"node": "Enviar Respuesta", "type": "main", "index": 0}]]
     },
     "Enviar Respuesta": {

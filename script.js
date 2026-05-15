@@ -72,3 +72,52 @@ document.querySelectorAll('#main-nav a').forEach(link => {
         lucide.createIcons();
     });
 });
+
+// --- PREMIUM SLIDER LOGIC ---
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.slider-dot');
+const sofiMascot = document.querySelector('.sofi-mascot');
+let currentSlide = 0;
+const slideInterval = 6000;
+
+function showSlide(n) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    currentSlide = (n + slides.length) % slides.length;
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+}
+
+function nextSlide() {
+    showSlide(currentSlide + 1);
+}
+
+// Auto play
+let sliderTimer = setInterval(nextSlide, slideInterval);
+
+// Dot navigation
+dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        clearInterval(sliderTimer);
+        showSlide(index);
+        sliderTimer = setInterval(nextSlide, slideInterval);
+    });
+});
+
+// --- SOFÍA INTERACTIVE EFFECT ---
+window.addEventListener('mousemove', (e) => {
+    if (!sofiMascot) return;
+    
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+    
+    const sofiRect = sofiMascot.getBoundingClientRect();
+    const sofiX = sofiRect.left + sofiRect.width / 2;
+    const sofiY = sofiRect.top + sofiRect.height / 2;
+    
+    const angleX = (mouseY - sofiY) / 30;
+    const angleY = (mouseX - sofiX) / -30;
+    
+    sofiMascot.style.transform = `translateY(${Math.sin(Date.now() / 1000) * 10}px) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+});

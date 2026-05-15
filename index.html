@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diseño Gráfico Express | Imperio Digital Épico</title>
     <meta name="description" content="Agencia de diseño gráfico de alto rendimiento. Especialistas en branding, web, video y multimedia con calidad épica y entrega express.">
-    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="style.css?v=4">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -29,15 +29,46 @@
     </header>
 
     <main>
-        <section class="hero">
-            <div class="hero-bg-effect"></div>
-            <div class="container">
-                <img src="assets/DGE.jpg" alt="Diseño Gráfico Express Logo" class="hero-logo" id="main-logo">
-                <h1>DISEÑO GRÁFICO EXPRESS</h1>
-                <p>Creatividad Épica a Toda Velocidad</p>
-                <div class="hero-btns">
-                    <a href="#web" class="btn-primary">Nuestros Módulos de Poder</a>
+        <section class="slider-container">
+            <!-- Slide 1 -->
+            <div class="slide active">
+                <img src="assets/slider1.png" alt="Diseño de Élite" class="slide-img">
+                <div class="slide-content">
+                    <img src="assets/DGE.jpg" alt="Logo" style="max-width: 150px; margin-bottom: 20px;">
+                    <h1 class="brand-font">DISEÑO GRÁFICO EXPRESS</h1>
+                    <p>Creatividad Épica a Toda Velocidad</p>
+                    <a href="#web" class="btn-primary">Forjar Mi Marca</a>
                 </div>
+            </div>
+            
+            <!-- Slide 2 -->
+            <div class="slide">
+                <img src="assets/slider2.png" alt="Web de Alto Impacto" class="slide-img">
+                <div class="slide-content">
+                    <h1 class="brand-font">FORJA DIGITAL</h1>
+                    <p>Estructuras que Dominan el Mercado</p>
+                    <a href="#web" class="btn-primary">Ver Módulos Web</a>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="slide">
+                <img src="assets/slider3.png" alt="Automatización IA" class="slide-img">
+                <div class="slide-content">
+                    <h1 class="brand-font">INTELIGENCIA ESTRATÉGICA</h1>
+                    <p>Automatización con el Poder de Sofía</p>
+                    <a href="#ia" class="btn-primary">Activar Mi Agente</a>
+                </div>
+            </div>
+
+            <!-- Sofía Mascot -->
+            <img src="assets/sofi.png" alt="Sofía AI Assistant" class="sofi-mascot">
+
+            <!-- Slider Controls -->
+            <div class="slider-controls">
+                <div class="slider-dot active" data-index="0"></div>
+                <div class="slider-dot" data-index="1"></div>
+                <div class="slider-dot" data-index="2"></div>
             </div>
         </section>
 
@@ -63,6 +94,7 @@
                         <a href="https://wa.me/524491091743?text=Hola%2C%20vengo%20desde%20la%20web%20y%20me%20interesa%20el%20paquete%20*Web%20Sencilla*%20%F0%9F%92%BB" class="btn-primary" style="width: 100%;">Cotizar Ahora</a>
                     </div>
                     <div class="glass-card">
+                        <img src="assets/sitio web .jpeg" alt="Web Pro & Brand" class="card-image">
                         <div class="service-icon"><i data-lucide="palette"></i></div>
                         <h3>Web Pro & Brand</h3>
                         <div class="price-tag">$3,000</div>
@@ -75,6 +107,7 @@
                         <a href="https://wa.me/524491091743?text=Hola%2C%20vengo%20desde%20la%20web%20y%20me%20interesa%20el%20paquete%20*Web%20Pro%20%26%20Brand*%20%F0%9F%8E%A8" class="btn-primary" style="width: 100%;">Cotizar Ahora</a>
                     </div>
                     <div class="glass-card">
+                        <img src="assets/tienda online.png" alt="Tienda Online" class="card-image">
                         <div class="service-icon"><i data-lucide="shopping-cart"></i></div>
                         <h3>Tienda Online</h3>
                         <div class="price-tag">$4,900</div>
@@ -111,6 +144,7 @@
                 </div>
                 <div class="services-grid">
                     <div class="glass-card">
+                        <img src="assets/logotipoventaja.jpeg" alt="Logotipo Épico" class="card-image">
                         <div class="service-icon"><i data-lucide="award"></i></div>
                         <h3>Logotipo Épico</h3>
                         <div class="price-tag">$1,200</div>
@@ -163,6 +197,7 @@
                 </div>
                 <div class="services-grid">
                     <div class="glass-card">
+                        <img src="assets/comunity manager.png" alt="Community Manager" class="card-image">
                         <div class="service-icon"><i data-lucide="camera"></i></div>
                         <h3>Community Manager</h3>
                         <div class="price-tag">$3,500<small>/mes</small></div>
@@ -189,6 +224,7 @@
                 </div>
                 <div class="services-grid">
                     <div class="glass-card">
+                        <img src="assets/artes especiales.png" alt="Invitaciones de Élite" class="card-image">
                         <div class="service-icon"><i data-lucide="mail"></i></div>
                         <h3>Invitaciones de Élite</h3>
                         <div class="price-tag">$850</div>
@@ -242,7 +278,7 @@
         </div>
     </footer>
 
-    <script src="script.js?v=2"></script>
+    <script src="script.js?v=3"></script>
     <script>
         // Initialize Lucide Icons
         lucide.createIcons();
