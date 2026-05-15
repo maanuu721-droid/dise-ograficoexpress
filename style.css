@@ -477,3 +477,61 @@ header {
     .hero { padding-top: 100px; }
     .hero-logo { max-width: 280px; }
 }
+
+/* --- Expansion Styles (Persuasive Detail Pages) --- */
+
+.expansion-container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.persuasive-text {
+    font-size: 1.3rem;
+    line-height: 1.9;
+    color: var(--text-white);
+    margin-bottom: 50px;
+    text-align: center;
+    font-weight: 300;
+}
+
+.advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.advantage-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(192, 160, 128, 0.2);
+    padding: 30px;
+    border-radius: 15px;
+    transition: var(--trans-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.advantage-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent-gold);
+    transform: translateY(-5px);
+}
+
+.advantage-card i {
+    color: var(--accent-gold);
+    margin-bottom: 20px;
+    width: 32px;
+    height: 32px;
+}
+
+.advantage-card h4 {
+    color: var(--accent-gold);
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.advantage-card p {
+    color: var(--text-dim);
+    font-size: 1rem;
+}
